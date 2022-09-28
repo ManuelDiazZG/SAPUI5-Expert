@@ -1,5 +1,5 @@
 {
-  "_version": "1.4.0",
+  "_version": "1.14.0",
   "sap.app": {
     "id": "logaligroup.SAPUI5",
     "type": "application",
@@ -23,6 +23,14 @@
           "annotations": [],
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
+        }
+      },
+      "mainServiceD": {
+        "uri": "/V2/Northwind/Northwind.svc/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0",
+          "localUri": "localService/metadata.xml"
         }
       }
     }
@@ -69,10 +77,18 @@
           "bundleName": "logaligroup.SAPUI5.i18n.i18n"
         }
       },
-      "": {
-        "dataSource": "mainService",
+      "invoices": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "Invoices.json"
+      },
+      "northwind": {
+        "dataSource": "mainServiceD",
         "preload": true,
-        "settings": {}
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "refreshAfterChange": false
+        }
       }
     },
     "resources": {
@@ -95,19 +111,33 @@
       "routes": [
         {
           "name": "RouteApp",
-          "pattern": "RouteApp",
+          "pattern": "",
           "target": [
-            "TargetApp"
+            "TargetOverview"
           ]
+        },
+        {
+            "name": "Details",
+          "pattern": "details/{invoicePath}",
+          "target": [
+            "TargetDetails"
+          ] 
         }
       ],
       "targets": {
-        "TargetApp": {
+        "TargetOverview": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
-          "viewId": "App",
-          "viewName": "App"
+          "viewId": "Overview",
+          "viewName": "Overview"
+        },
+        "TargetDetails":{
+            "viewType": "XML",
+            "transition": "slide",
+            "clearControlAggregation": false,
+            "viewId": "Details",
+            "viewName": "Details"
         }
       }
     },
